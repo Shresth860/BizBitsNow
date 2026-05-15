@@ -43,30 +43,32 @@
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
-```bash
+bash
 git clone [https://github.com/Shresth860/BizBitsNow.git](https://github.com/Shresth860/BizBitsNow.git)
 cd BizBitsNow
-2. Set up environment variables
+
+### 2. Set up environment variables
 Project ke root directory mein ek .env file create karein:
 Bash
+
 # New local secure env create karein
 touch .env
 
-3. Fill values in .env
+### 3. Fill values in .env
 Code snippet
 DATABASE_USERNAME=AskFromOwner
 DATABASE_PASSWORD=AskFromOwner
 EMAIL_PASSWORD=your_16_digit_gmail_app_password\
 
-4. Build and Run via Docker Compose
+### 4. Build and Run via Docker Compose
 Bash
 docker-compose up --build
 Is single isolated orchestration layer command se base system complete architecture deploy kar dega.
 
-5. Verify backend is running
+### 5. Verify backend is running
 GET http://localhost:8080/
 
-📁 Project Structure
+### 📁 Project Structure
 BizBitsNow/
 ├── src/
 │   ├── main/
@@ -89,6 +91,6 @@ BizBitsNow/
 └── pom.xml
 
 
-BizBitsNow Enterprise Backend Application Server
+### BizBitsNow Enterprise Backend Application Server
 Built & Maintained by
 Shresth Saxena
