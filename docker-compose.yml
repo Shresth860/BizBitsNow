@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: bizbits-db
+    environment:
+      MYSQL_DATABASE: bizbitsnow_db
+      MYSQL_ROOT_PASSWORD: root1234
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-proot1234"]
+      timeout: 10s
+      retries: 5
+    networks:
+      - bizbits-network
+
+  app:
+    build: .
+    container_name: bizbits-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bizbitsnow_db
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - bizbits-network
+
+networks:
+  bizbits-network:
+    driver: bridge
