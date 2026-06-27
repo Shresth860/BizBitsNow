@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,13 +25,16 @@ public class SellerController {
         return ResponseEntity.ok("Seller Deleted Successfully :");
     }
 
-    // update Seller Details
-    @PreAuthorize("hasRole('SELLER')")
-    @PutMapping("/update/{sellerId}")
-    public ResponseEntity<SellerDTO> updateSeller(@PathVariable Long id , @RequestBody SellerDTO sellerDTO){
-        return ResponseEntity.ok(sellerService.updateSeller(id,sellerDTO));
-    }
+    @PreAuthorize("hasAnyRole('SELLER')")
+    @PutMapping(value = "/updateSeller/{id}", consumes = {"multipart/form-data"})
+    public ResponseEntity<SellerDTO> updateSeller(
+            @PathVariable Long id,
+            @RequestPart("seller") SellerDTO sellerDTO,
+            @RequestPart(value = "logo", required = false) MultipartFile logoFile,
+            @RequestPart(value = "banner", required = false) MultipartFile bannerFile) {
 
+        return ResponseEntity.ok(sellerService.updateSeller(id, sellerDTO, logoFile, bannerFile));
+    }
     // get Seller Profile
     @PreAuthorize("hasRole('SELLER')")
     @GetMapping("/me")
